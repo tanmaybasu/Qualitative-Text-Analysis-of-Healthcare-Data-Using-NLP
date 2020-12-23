@@ -13,4 +13,4 @@ NLP provides both a foundation to code qualitatively more quickly and a method t
 
 The analysis and performance of this framework is explained in the following paper:
 
-Timothy C Guetterman, Tammy Chang, Melissa DeJonckheere, Tanmay Basu, Elizabeth Scruggs and VG Vinod Vydiswaran. Augmenting Qualitative Text Analysis with Natural Language Processing: Methodological Study. Journal of Medical Internet Research, vol. 20(6), 2018. (https://www.jmir.org/2018/6/e231/).
+[Timothy C Guetterman, Tammy Chang, Melissa DeJonckheere, Tanmay Basu, Elizabeth Scruggs and VG Vinod Vydiswaran. Augmenting Qualitative Text Analysis with Natural Language Processing: Methodological Study. Journal of Medical Internet Research, vol. 20(6), 2018.] (https://www.jmir.org/2018/6/e231/).
