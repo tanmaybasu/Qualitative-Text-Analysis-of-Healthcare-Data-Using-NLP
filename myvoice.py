@@ -13,9 +13,9 @@ from nltk.corpus import wordnet as wn
 from nltk.tokenize import word_tokenize
 
 class qualitative_text_analysis():
-    def __init__(self,path='/home/project/what_qualities.txt',metric='w',pos='n',transformation='d'):
+    def __init__(self,path='/home/project/what_qualities.txt',wordnet_metric='w',pos='n',transformation='d'):
         self.path = path
-        self.metric=metric
+        self.wordnet_metric=wordnet_metric
         self.pos=pos
         self.transformation=transformation
 
@@ -75,15 +75,15 @@ class qualitative_text_analysis():
             sns2=syn2[0] 
             for i in range (0,len(syn1)):
                 for j in range (0,len(syn2)):
-                    if self.metric=='j':                                            # Jiang-Conrath Similarity
+                    if self.wordnet_metric=='j':                                            # Jiang-Conrath Similarity
                         score=wn.jcn_similarity(syn1[i],syn2[j])
-                    elif self.metric=='le':                                         # Leacock-Chodorow Similarity 
+                    elif self.wordnet_metric=='le':                                         # Leacock-Chodorow Similarity 
                         score=wn.lch_similarity(syn1[i],syn2[j],simulate_root=False) 
-                    elif self.metric=='li':                                         # Lin Similarity
+                    elif self.wordnet_metric=='li':                                         # Lin Similarity
                         score=wn.lin_similarity(syn1[i],syn2[j])
-                    elif self.metric=='p':                                          # Path Similarity 
+                    elif self.wordnet_metric=='p':                                          # Path Similarity 
                         score=wn.path_similarity(syn1[i],syn2[j])
-                    elif self.metric=='w':                                          # Wu-Palmer Similarity. It can not be '0'. It ranges in (0,1] 
+                    elif self.wordnet_metric=='w':                                          # Wu-Palmer Similarity. It can not be '0'. It ranges in (0,1] 
                         score=wn.wup_similarity(syn1[i],syn2[j])  
                         
                     if score>max_score:                         # Finding the maximum score              
@@ -222,15 +222,15 @@ class qualitative_text_analysis():
                      
         data=[x.lower() for x in data] 
         thr_merge=50                            # Threshold on percentage of intersection between two clusters    
-        if self.metric=='j':
+        if self.wordnet_metric=='j':
             thr_sim=0.9                         # Jiang-Conrath similarity threshold 
-        elif self.metric=='le':
+        elif self.wordnet_metric=='le':
             thr_sim=2.8                         # Leacock-Chodorow (LCH) similarity threshold 
-        elif self.metric=='li':
+        elif self.wordnet_metric=='li':
             thr_sim=0.9                         # Lin similarity threshold 
-        elif self.metric=='p':
+        elif self.wordnet_metric=='p':
             thr_sim=0.4                         # Path similarity threshold
-        elif self.metric=='w':
+        elif self.wordnet_metric=='w':
             thr_sim=0.9                         # Wu-Palmer similarity threshold 
         else:
             print('\n ##### Wrong input for wordnet metric. Enter correctly. ##### \n\n The options are '
