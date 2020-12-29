@@ -15,7 +15,7 @@ Note that this pipeline can be used for any such text summarization task.
 
 ## How to run the pipeline?
 
-The model is implemented in `qualitative_text_analysis`. Run the following lines to get the summary of given data. 
+The model is implemented in `qualitative_text_analysis.py`. Run the following lines in a Python environment to get the summary of given data. 
 
 ```
 clf=qualitative_text_analysis(path='/Users/basut/myvoice/what_qualities.txt',wordnet_metric='w',pos='b',transformation='d')
