@@ -1,4 +1,4 @@
-# Qualitative Text Analysis using NLP and Machine Learning
+# Qualitative Text Analysis using Wordnet and Machine Learning Techniques
  
 Qualitative research methods are increasingly being used across disciplines because of their ability to help investigators understand the perspectives of participants in their own words. However, qualitative analysis is a laborious and resource-intensive process. To achieve depth, researchers are limited to smaller sample sizes when analyzing text data. One potential method to address this concern is natural language processing (NLP). Qualitative text analysis involves researchers reading data, assigning code labels, and iteratively developing findings; NLP has the potential to automate part of this process. Unfortunately, little methodological research has been done to compare automatic coding using NLP techniques and qualitative coding, which is critical to establish the viability of NLP as a useful, rigorous analysis procedure.
 
