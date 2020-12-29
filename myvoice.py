@@ -7,14 +7,17 @@ Created on Sunday October 2, 2016 @ 23:32:39
 @description: Qualitative Text Analysis in Healthcare using NLP  
 """ 
 
-import re,csv
+import csv,re,sys
 from nltk import pos_tag,PorterStemmer
 from nltk.corpus import wordnet as wn
 from nltk.tokenize import word_tokenize
 
 class qualitative_text_analysis():
-    def __init__(self,path='/home/project/what_qualities.txt'):
+    def __init__(self,path='/home/project/what_qualities.txt',metric='w',pos='n',transformation='d'):
         self.path = path
+        self.metric=metric
+        self.pos=pos
+        self.transformation=transformation
 
     # Common subsequence 
     def common_subsequence(self,w1,w2):
@@ -45,13 +48,13 @@ class qualitative_text_analysis():
         return lst    
                 
     # Merge two synonyms 
-    def merging_synsets(self,syns,w1,w2,sns1,sns2,max_score,loc,opt3):
+    def merging_synsets(self,syns,w1,w2,sns1,sns2,max_score,loc):
         syns[loc].insert(0,max_score)
         syns[loc].insert(1,w1)
         syns[loc].insert(2,sns1.name())
         syns[loc].insert(3,w2)
         syns[loc].insert(4,sns2.name()) 
-        if opt3=='d':
+        if self.transformation=='d':
             lst=[]
             lst=self.extract_derivational_forms(sns1,w1,lst)
             lst=self.extract_derivational_forms(sns2,w2,lst) 
@@ -62,7 +65,7 @@ class qualitative_text_analysis():
         return syns,loc
         
     # Finding most similar concept between two words 
-    def word_similarity(self,w1,w2,syns,loc,thr_sim,opt1,opt3):
+    def word_similarity(self,w1,w2,syns,loc,thr_sim):
         syn1=wn.synsets(w1, wn.NOUN or wn.ADJ)    
         syn2=wn.synsets(w2, wn.NOUN or wn.ADJ)    
     
@@ -72,28 +75,26 @@ class qualitative_text_analysis():
             sns2=syn2[0] 
             for i in range (0,len(syn1)):
                 for j in range (0,len(syn2)):
-                    if opt1=='1':                                      # Wu-Palmer Similarity. It can not be '0'. It ranges in (0,1] 
-                        score=wn.wup_similarity(syn1[i],syn2[j])  
-                    elif opt1=='2':                                    # Path Similarity 
-                        score=wn.path_similarity(syn1[i],syn2[j])
-                    elif opt1=='3':                                    # Leacock-Chodorow Similarity 
-                        score=wn.lch_similarity(syn1[i],syn2[j],simulate_root=False)
-                    elif opt1=='4':                                    # Resnik Similarity
-                        score=wn.res_similarity(syn1[i],syn2[j])    
-                    elif opt1=='5':                                    # Jiang-Conrath Similarity
+                    if self.metric=='j':                                            # Jiang-Conrath Similarity
                         score=wn.jcn_similarity(syn1[i],syn2[j])
-                    elif opt1=='6':                                    # Lin Similarity
+                    elif self.metric=='le':                                         # Leacock-Chodorow Similarity 
+                        score=wn.lch_similarity(syn1[i],syn2[j],simulate_root=False) 
+                    elif self.metric=='li':                                         # Lin Similarity
                         score=wn.lin_similarity(syn1[i],syn2[j])
-    
+                    elif self.metric=='p':                                          # Path Similarity 
+                        score=wn.path_similarity(syn1[i],syn2[j])
+                    elif self.metric=='w':                                          # Wu-Palmer Similarity. It can not be '0'. It ranges in (0,1] 
+                        score=wn.wup_similarity(syn1[i],syn2[j])  
+                        
                     if score>max_score:                         # Finding the maximum score              
                         max_score=score
                         sns1=syn1[i] 
                         sns2=syn2[j] 
                         if max_score>=thr_sim:                     # Storing all the synset pairs that have scores > threshold 
-                            syns,loc=self.merging_synsets(syns,w1,w2,sns1,sns2,max_score,loc,opt3)                       
+                            syns,loc=self.merging_synsets(syns,w1,w2,sns1,sns2,max_score,loc)                       
                             count=count+1 
             if count==0:                           # Storing the synset that has maximum score but the score < threshold
-                syns,loc=self.merging_synsets(syns,w1,w2,sns1,sns2,max_score,loc,opt3)   
+                syns,loc=self.merging_synsets(syns,w1,w2,sns1,sns2,max_score,loc)   
         return syns,loc 
     
     # Clustering of term sets
@@ -149,7 +150,7 @@ class qualitative_text_analysis():
         return unique_terms,new_lst  
     
     # Loading the clusters into files aftre mapping each word to its actual form 
-    def store_cluster(self,data,path,clusters,loc,all_terms,unique_terms,stems,all_processed_terms,opt2,opt3):
+    def store_cluster(self,data,path,clusters,loc,all_terms,unique_terms,stems,all_processed_terms):
         flr = open(path, 'w') 
         wr = csv.writer(flr, delimiter=',',dialect='excel')  
         word_clusters=[] 
@@ -157,7 +158,7 @@ class qualitative_text_analysis():
         for rw in clusters[0:loc]: 
             if rw[0]!='':
                 lst=[];
-                if opt3=='s':                           # Mapping the stems to the roots     
+                if self.transformation=='s':                       # Mapping the stems to the roots     
                     for i in range(0,len(rw)):                
                         for j in range (0,len(stems)): 
                             if rw[i]==stems[j]:
@@ -174,13 +175,14 @@ class qualitative_text_analysis():
             if elm!='':
                 lst=[] 
                 lst.append(elm) 
-                if opt3=='d': 
-                    if opt2=='b':
-                        syn=wn.synsets(elm, wn.NOUN or wn.ADJ)
-                    elif opt2=='a':
+                if self.transformation=='d': 
+                    if self.pos=='a':                               # Only adjectives
                         syn=wn.synsets(elm, wn.ADJ)
-                    elif opt2=='n':
+                    elif self.pos=='n':                             # Only nouns
                         syn=wn.synsets(elm, wn.NOUN)    
+                    elif self.pos=='b':                             # Both adjectives and nouns
+                        syn=wn.synsets(elm, wn.NOUN or wn.ADJ) 
+
                     if len(syn)>0:
                         for i in range(0,len(syn)):
                             lst=self.extract_derivational_forms(syn[i],elm,lst)  
@@ -200,10 +202,6 @@ class qualitative_text_analysis():
     
     # The main function   
     def get_summary(self):
-                          
-        opt1 = input("Choose a similarity measure to identify relation between synsets: \n\t '1' Wu-Palmer Similarity \n\t '2' Path Similarity \n\t '3' Leacock-Chodorow (LCH) Similarity \n\t '4' Resnik Similarity \n\t '5' Jiang-Conrath Similarity \n\t '6' Lin Similarity \n") 
-        opt2 = input("Choose to process further: \n\t 'a' for adjectives \n\t 'n' for nouns \n\t 'b' for both \n")
-        opt3 = input("Choose to process further: \n\t 's' for stemming \n\t 'd' for derivationally related forms\n")
 
         outfile1='./'+self.path.split('/')[-1].strip('.txt')+'_synonyms.csv'
         outfile2='./'+self.path.split('/')[-1].strip('.txt')+'_summary.csv'    
@@ -224,20 +222,37 @@ class qualitative_text_analysis():
                      
         data=[x.lower() for x in data] 
         thr_merge=50                            # Threshold on percentage of intersection between two clusters    
-        if opt1=='1':
-            thr_sim=0.9                         # WUP similarity threshold 
-        elif opt1=='2':
-            thr_sim=0.4                         # Path similarity threshold
-        elif opt1=='3':
+        if self.metric=='j':
+            thr_sim=0.9                         # Jiang-Conrath similarity threshold 
+        elif self.metric=='le':
             thr_sim=2.8                         # Leacock-Chodorow (LCH) similarity threshold 
-    
-        if opt2=='a':                   # Process adjectives only
+        elif self.metric=='li':
+            thr_sim=0.9                         # Lin similarity threshold 
+        elif self.metric=='p':
+            thr_sim=0.4                         # Path similarity threshold
+        elif self.metric=='w':
+            thr_sim=0.9                         # Wu-Palmer similarity threshold 
+        else:
+            print('\n ##### Wrong input for wordnet metric. Enter correctly. ##### \n\n The options are '
+                  '\n\t "j" for Jiang-Conrath similarity,'
+                  '\n\t "le" for Leacock-Chodorow (LCH) similarity'
+                  '\n\t "li" for Lin similarity'
+                  '\n\t "li" for Path similarity'
+                  '\n\t "li" for Wu-Palmer similarity \n\n')
+            sys.exit(0)
+            
+        if self.pos=='a':                   # Process adjectives only
             terms=adjectives    
-        elif opt2=='n':                 # Process nouns only
+        elif self.pos=='n':                 # Process nouns only
             terms=nouns
-        elif opt2=='b':                 # Process both adjectives and nouns
+        elif self.pos=='b':                 # Process both adjectives and nouns
             terms=adjectives+nouns
-    
+        else:
+            print('\n ##### Wrong input for POS. Enter correctly. ##### \n\n The options are '
+                  '\n\t "a" for adjectives,'
+                  '\n\t "b" for both adjectives and nouns'
+                  '\n\t "n" for nouns \n\n')
+            sys.exit(0)    
     # Synsets generation   
         loc=0
         unique_terms=list(set(terms))
@@ -247,7 +262,7 @@ class qualitative_text_analysis():
         syns = [[]for x in range(int(ln))]     
         for i in range(0,len(unique_terms)-1):
             for j in range(i+1,len(unique_terms)):
-                syns,loc=self.word_similarity(unique_terms[i],unique_terms[j],syns,loc,thr_sim,opt1,opt3) # Finding most similar synset 
+                syns,loc=self.word_similarity(unique_terms[i],unique_terms[j],syns,loc,thr_sim) # Finding most similar synset 
               
         syns=sorted(syns[0:loc], key = lambda x: x[0], reverse=True)   # Sort the synsets in decreasing order of scores
     #    print syns[0] 
@@ -268,7 +283,7 @@ class qualitative_text_analysis():
             wr.writerow(rw) 
             if rw[0]>=thr_sim:                      
                 for i in range(1,len(rw)): 
-                    if opt3=='s':                                   # Perform stemming
+                    if self.transformation=='s':                                   # Perform stemming
                         stm=PorterStemmer().stem_word(rw[i])             
                         if all_processed_terms.count(rw[i])==0:
                             stems.append(stm) 
@@ -280,5 +295,5 @@ class qualitative_text_analysis():
         flr.close()
     
         clusters=self.clustering_terms(processed_terms,loc,thr_merge,0)         # Clustering 
-        count=self.store_cluster(data,outfile2,clusters,loc,all_terms,unique_terms,stems,all_processed_terms,opt2,opt3) 
+        count=self.store_cluster(data,outfile2,clusters,loc,all_terms,unique_terms,stems,all_processed_terms) 
         print('No. of Clusters: '+ str(count))
