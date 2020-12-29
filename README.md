@@ -20,8 +20,8 @@ The analysis and performance of this framework is explained in the following pap
 The model is implemented in `qualitative_text_analysis`. Run the following lines to get the summary of given data. 
 
 ```
-# clf=qualitative_text_analysis(path='/Users/basut/myvoice/what_qualities.txt',wordnet_metric='w',pos='b',transformation='d')
-# clf.get_summary()
+clf=qualitative_text_analysis(path='/Users/basut/myvoice/what_qualities.txt',wordnet_metric='w',pos='b',transformation='d')
+clf.get_summary()
 ```
 
 Here `path` is the path of the given data. The data should be in a text file and each line should not contain more than 160 characters including spaces. It is recommended to have 50 to 100 lines in the data file, but in principle, there is no limit on number of lines. 
@@ -37,5 +37,12 @@ The following options of `Wordnet metrics` are available:
          "p" for Path similarity
          
          "w" for Wu-Palmer similarity 
+
+The following options of `POS` i.e., parts of speech are available: 
+         "a" for adjectives
+         
+         "b" for both adjectives and nouns
+         
+         "n" for nouns 
 
 An example code to run `qualitative_text_analysis` for the given data is uploaded as `test.py`. For any further query, comment or suggestion, you may reach out to me at welcometanmay@gmail.com
