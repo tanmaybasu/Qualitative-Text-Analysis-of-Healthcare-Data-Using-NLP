@@ -26,11 +26,16 @@ clf.get_summary()
 
 Here `path` is the path of the given data. The data should be in a text file and each line should not contain more than 160 characters including spaces. It is recommended to have 50 to 100 lines in the data file, but in principle, there is no limit on number of lines. 
 
-The following options of wordnet metrics are available:          
+The following options of wordnet metrics are available:    
+
          "j" for Jiang-Conrath similarity,
+         
          "le" for Leacock-Chodorow (LCH) similarity,
+         
          "li" for Lin similarity,
-         "li" for Path similarity,
-         "li" for Wu-Palmer similarity, 
+         
+         "p" for Path similarity,
+         
+         "w" for Wu-Palmer similarity, 
 
 An example code to run `qualitative_text_analysis` for the given data is uploaded as `test.py`. For any further query, comment or suggestion, you may reach out to me at welcometanmay@gmail.com
