@@ -39,6 +39,7 @@ The following options of `Wordnet metrics` are available:
          "w" for Wu-Palmer similarity 
 
 The following options of `POS` i.e., parts of speech are available: 
+
          "a" for adjectives
          
          "b" for both adjectives and nouns
