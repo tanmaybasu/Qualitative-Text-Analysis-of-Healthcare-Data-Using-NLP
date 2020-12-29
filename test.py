@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Sat Dec 26 17:17:40 2020
+Created on Monday October 3, 2016 @ 15:47:21  
 
-@author: basut
+@author: Tanmay Basu
 """
 
 from qualitative_text_analysis import qualitative_text_analysis
 
 
-clf=qualitative_text_analysis('/Users/basut/myvoice/what_qualities.txt','w','b','d')
+clf=qualitative_text_analysis(path='/Users/basut/myvoice/what_qualities.txt',wordnet_metric='w',pos='b',transformation='d')
 clf.get_summary()
+
