@@ -13,7 +13,7 @@ from nltk.corpus import wordnet as wn
 from nltk.tokenize import word_tokenize
 
 class qualitative_text_analysis():
-    def __init__(self,path='/home/project/what_qualities.txt',wordnet_metric='w',pos='n',transformation='d'):
+    def __init__(self,path='/home/project/what_qualities.txt',wordnet_metric='w',pos='b',transformation='d'):
         self.path = path
         self.wordnet_metric=wordnet_metric
         self.pos=pos
