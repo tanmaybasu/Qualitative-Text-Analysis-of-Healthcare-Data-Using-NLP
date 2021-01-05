@@ -44,4 +44,6 @@ The following options of `POS` i.e., parts of speech are available and the `defa
          
          "n" for nouns 
 
-The options of `transformation` are "d" to generate `derivationally related form` of a term and "s" to perform `stemming` and the `default` option is `d`. An example code to run `qualitative_text_analysis` for the given data is uploaded as `test.py`. For any further query, comment or suggestion, you may reach out to me at welcometanmay@gmail.com
+The options of `transformation` are "d" to generate `derivationally related form` of a term and "s" to perform `stemming` and the `default` option is `d`. An example code to run `qualitative_text_analysis` for the given data is uploaded as `test.py`. 
+
+For any further query, comment or suggestion, you may reach out to me at welcometanmay@gmail.com.
