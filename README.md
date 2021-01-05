@@ -22,7 +22,7 @@ clf=qualitative_text_analysis(path='/Users/basut/myvoice/what_qualities.txt',wor
 clf.get_summary()
 ```
 
-Here `path` is the path of the given data. The data should be in a text file with '.txt' extension and each line of the file should not contain more than 160 characters including spaces. It is recommended to have 50 to 100 lines in the data file, but in principle, there is no limit on number of lines. The output will be stored in a csv file, named as `input_filename_summary.csv`. Each row of the output csv file represents a cluster of terms. 
+Here `path` is the path of the given data. The data should be in a text file with '.txt' extension and each line of the file should not contain more than 160 characters including spaces. It is recommended to have 50 to 100 lines in the data file, but in principle, there is no limit on number of lines. The `output` will be stored in a csv file, named as `input_filename_summary.csv`. Each row of the output csv file represents a cluster of terms. 
 
 The following options of `Wordnet metrics` are available and the `default` is `Wu-Palmer similarity`:    
 
