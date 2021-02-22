@@ -11,7 +11,10 @@ The analysis and performance of this framework is explained in this paper:
 
 [Timothy C Guetterman, Tammy Chang, Melissa DeJonckheere, Tanmay Basu, Elizabeth Scruggs and VG Vinod Vydiswaran. Augmenting Qualitative Text Analysis with Natural Language Processing: Methodological Study. Journal of Medical Internet Research, vol. 20(6), 2018.](https://www.jmir.org/2018/6/e231/).
 
-Note that this pipeline can be used for any such text summarization task. 
+`Note that this pipeline can be used for any such text summarization task.` 
+
+## Prerequsites
+[Python 3 version](https://www.python.org/downloads/), [Scikit-Learn](https://scikit-learn.org/0.16/install.html), [NLTK](https://www.nltk.org/install.html), [Fitz](https://pypi.org/project/fitz/) 
 
 ## How to run the pipeline?
 
@@ -46,4 +49,20 @@ The following options of `POS` i.e., parts of speech are available and the `defa
 
 The options of `transformation` are "d" to generate `derivationally related form` of a term and "s" to perform `stemming` and the `default` option is `d`. An example code to run `qualitative_text_analysis` for the given data is uploaded as `test.py`. 
 
-For any further query, comment or suggestion, you may reach out to me at welcometanmay@gmail.com.
+## Contact
+
+For any further query, comment or suggestion, you may reach out to me at welcometanmay@gmail.com
+
+## Citing
+```
+@article{guetterman18,
+  title={Augmenting qualitative text analysis with natural language processing: methodological study},
+  author={Guetterman, Timothy C and Chang, Tammy and DeJonckheere, Melissa and Basu, Tanmay and Scruggs, Elizabeth and Vydiswaran, VG Vinod},
+  journal={Journal of Medical Internet Research},
+  volume={20},
+  number={6},
+  pages={e231},
+  year={2018},
+  publisher={JMIR Publications Inc., Toronto, Canada}
+}
+```
