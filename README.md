@@ -14,7 +14,7 @@ The analysis and performance of this framework is explained in this paper:
 `Note that this pipeline can be used for any such text summarization task.` 
 
 ## Prerequsites
-[Python 3 version](https://www.python.org/downloads/), [Scikit-Learn](https://scikit-learn.org/0.16/install.html), [NLTK](https://www.nltk.org/install.html), [Fitz](https://pypi.org/project/fitz/) 
+[Python 3 version](https://www.python.org/downloads/), [NLTK](https://www.nltk.org/install.html)
 
 ## How to run the pipeline?
 
