@@ -53,7 +53,7 @@ The options of `transformation` are "d" to generate `derivationally related form
 
 For any further query, comment or suggestion, you may reach out to me at welcometanmay@gmail.com
 
-## Citing
+## Citation
 ```
 @article{guetterman18,
   title={Augmenting qualitative text analysis with natural language processing: methodological study},
